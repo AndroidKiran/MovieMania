@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -12,6 +13,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
 import android.text.Editable
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import com.mania.movie.BR
@@ -33,10 +35,12 @@ import com.mania.movie.main.review.ui.ReviewFragment
 import com.mania.movie.main.review.ui.ReviewListFragment
 import com.mania.movie.mvvm.observe
 import com.mania.movie.ui.BindedMultiStateView
+import com.mania.movie.ui.RatingBar
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
+
 
 class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePickerViewModel>(), HasSupportFragmentInjector {
 
@@ -69,6 +73,9 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
     private val contentLoadingConfiguration = ContentLoadingConfiguration()
 
     private val toolbarConfiguration = ToolbarConfiguration()
+
+    private var ratingBarBar: RatingBar? = null
+
 
     override fun getViewModel() =
             ViewModelProviders.of(this@MoviePickerActivity, viewFactory)
@@ -155,7 +162,7 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
     private fun subscribeToMovieListLiveData() {
         moviePickerViewModel.movieListLiveData.observe(this) {
             it?.let {
-                if(it.isSuccess()) {
+                if (it.isSuccess()) {
                     val movieList = it.value.searchList
                     if (movieList != null && movieList.isNotEmpty()) {
                         moviePickerAdapter.setData(movieList)
@@ -183,20 +190,21 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
 
     private val navigator = object : IMoviePickerNavigator {
 
-        override fun onMovieLike(moviePickerModel: MoviePickerModel) {
+        override fun onMovieLike(moviePickerModel: MoviePickerModel, view: View) {
             hideKeyboard()
-            snackBarConfiguration.showSnackBar(getString(R.string.str_under_progress),
-                    SnackbarConfiguration.Type.NEUTRAL,
-                    Snackbar.LENGTH_SHORT)
+            dismissRating()
+            ratingBarBar = getRatingView(view)
         }
 
         override fun onMovieBookmark(moviePickerModel: MoviePickerModel) {
             hideKeyboard()
+            dismissRating()
             moviePickerViewModel.insertBookmarkMovie(moviePickerModel)
         }
 
         override fun onMovieReview(moviePickerModel: MoviePickerModel) {
             hideKeyboard()
+            dismissRating()
             replace(ReviewFragment().apply {
                 this.arguments = Bundle().apply {
                     putParcelable(MOVIE_PICKER_MODEL, moviePickerModel)
@@ -208,6 +216,7 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
 
         override fun onMoviePick(moviePickerModel: MoviePickerModel) {
             hideKeyboard()
+            dismissRating()
             replace(MovieDetailFragment().apply {
                 this.arguments = Bundle().apply {
                     putString(MOVIE_ID, moviePickerModel.id)
@@ -217,7 +226,7 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
         }
     }
 
-    override fun onFragmentInteraction(visible:Int) {
+    override fun onFragmentInteraction(visible: Int) {
         toggleFragment(visible)
     }
 
@@ -237,22 +246,26 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
         when (it.itemId) {
             R.id.action_book_mark -> {
                 hideKeyboard()
+                dismissRating()
                 replace(BookmarkMoviesFragment(), BookmarkMoviesFragment.TAG, R.id.fragment_container)
                 toggleFragment(View.VISIBLE)
             }
 
             R.id.action_log_in -> {
                 hideKeyboard()
+                dismissRating()
                 startActivityForResult(AuthenticationActivity.start(this), REQUEST_CODE)
             }
 
             R.id.action_log_out -> {
                 hideKeyboard()
+                dismissRating()
                 startActivityForResult(AuthenticationActivity.start(this), REQUEST_CODE)
             }
 
             R.id.action_review -> {
                 hideKeyboard()
+                dismissRating()
                 replace(ReviewListFragment(), ReviewListFragment.TAG, R.id.fragment_container)
                 toggleFragment(View.VISIBLE)
             }
@@ -289,6 +302,30 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
                         SnackbarConfiguration.Type.NEUTRAL,
                         Snackbar.LENGTH_SHORT)
             }
+        }
+    }
+
+    private fun getRatingView(view: View): RatingBar {
+        val inflater = this@MoviePickerActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.layout_rating, null)
+
+        return RatingBar(view, layout).apply {
+            setAnchor()
+            setRatingListener(ratingListener)
+        }
+    }
+
+    private val ratingListener = object : RatingBar.RatingSelectionListener {
+        override fun onRatingSelected(drawable: Drawable) {
+            val drawableItem = drawable
+        }
+    }
+
+
+    private fun dismissRating() {
+        ratingBarBar?.let {
+            it.setRatingListener(null)
+            it.dismiss()
         }
     }
 

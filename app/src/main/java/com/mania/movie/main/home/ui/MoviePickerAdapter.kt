@@ -64,7 +64,7 @@ class MoviePickerAdapter constructor(private val preferenceHelper: PreferenceHel
                 }
 
                 this.btnLike.setOnClickListener {
-                    itemNavigator?.onMovieLike(moviePickerModel)
+                    itemNavigator?.onMovieLike(moviePickerModel, it)
                 }
 
                 this.btnReview.setOnClickListener {
