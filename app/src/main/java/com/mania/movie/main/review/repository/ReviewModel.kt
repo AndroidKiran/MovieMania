@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey
 import android.databinding.BaseObservable
 import com.mania.movie.room.IReviewDao
 
-@Entity(tableName = IReviewDao.TABLE_NAME, indices = [(Index("imdbID", unique = true))])
+@Entity(tableName = IReviewDao.TABLE_NAME, indices = [(Index("imdbID", unique = true)),(Index("userId"))])
 data class ReviewModel constructor(
 
         @PrimaryKey(autoGenerate = false)
@@ -30,5 +30,8 @@ data class ReviewModel constructor(
         var reviewPath: String = "",
 
         @ColumnInfo(name = "userId")
-        var userId: String = "") : BaseObservable()
+        var userId: String = "",
+
+        @ColumnInfo(name = "createdAt")
+        var createdAt: Long = System.currentTimeMillis()) : BaseObservable()
 

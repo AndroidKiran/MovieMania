@@ -4,6 +4,7 @@ import android.databinding.ObservableBoolean
 import com.mania.movie.MovieManiaApplication
 import com.mania.movie.helper.PreferenceHelper
 import com.mania.movie.helper.Utils
+import com.mania.movie.helper.Utils.ACCOUNT_ID
 import com.mania.movie.helper.Utils.LOGGED_IN
 import com.mania.movie.helper.Utils.PHOTO_URL
 import com.mania.movie.main.base.BaseViewModel
@@ -19,5 +20,9 @@ class AuthenticationViewModel @Inject constructor (application: MovieManiaApplic
 
     fun persistUrlPhoto(url: String) {
         preferenceHelper.set(PHOTO_URL, url)
+    }
+
+    fun persistAccountId(id: String) {
+        preferenceHelper.set(ACCOUNT_ID, id)
     }
 }

@@ -10,6 +10,8 @@ import java.util.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
+import com.mania.movie.helper.PreferenceHelper
+import com.mania.movie.helper.Utils
 import com.mania.movie.main.home.repository.model.MoviePickerModel
 import com.mania.movie.main.review.repository.ReviewDbRepository
 import com.mania.movie.main.review.repository.ReviewModel
@@ -21,7 +23,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 
-class ReviewViewModel @Inject constructor(application: MovieManiaApplication, private val dbRepository: ReviewDbRepository) : BaseViewModel(application) {
+class ReviewViewModel @Inject constructor(application: MovieManiaApplication, private val dbRepository: ReviewDbRepository, private val preferenceHelper: PreferenceHelper) : BaseViewModel(application) {
 
     private val DIRECTORY = Environment.getExternalStorageDirectory().path + "/Reviews/"
     private val picName = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
@@ -72,7 +74,8 @@ class ReviewViewModel @Inject constructor(application: MovieManiaApplication, pr
                     moviePickerModel.year,
                     moviePickerModel.type,
                     moviePickerModel.poster,
-                    storedPath)
+                    storedPath,
+                    Utils.getUserID(preferenceHelper)!!)
 
     private fun handleOnSuccess() {
         finishActivity.postValue(true)

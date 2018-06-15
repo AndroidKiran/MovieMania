@@ -10,7 +10,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.mania.movie.room.IMoviePickerDao
 
-@Entity(tableName = IMoviePickerDao.TABLE_NAME, indices = [(Index("imdbID", unique = true))])
+@Entity(tableName = IMoviePickerDao.TABLE_NAME, indices = [(Index("imdbID", unique = true)), (Index("userId"))])
 data class MoviePickerModel constructor(
 
         @PrimaryKey(autoGenerate = false)
@@ -35,7 +35,10 @@ data class MoviePickerModel constructor(
         var poster: String = "",
 
         @ColumnInfo(name = "userId")
-        var userId: String = "") : BaseObservable(), Parcelable {
+        var userId: String = "",
+
+        @ColumnInfo(name = "createdAt")
+        var createdAt: Long = System.currentTimeMillis()) : BaseObservable(), Parcelable {
 
     var isLoggedIn = false
 

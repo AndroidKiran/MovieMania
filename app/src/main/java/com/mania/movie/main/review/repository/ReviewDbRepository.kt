@@ -17,8 +17,8 @@ class ReviewDbRepository @Inject constructor(private val reviewDao: IReviewDao, 
             }.getCompletableAsync(schedulerProvider)
 
 
-    fun getReviews() =
-            reviewDao.getReviews()
+    fun getReviews(userID: String) =
+            reviewDao.getReviews(userID)
                     .toFlowable()
                     .getFlowableAsync(schedulerProvider)
                     .onErrorResumeNext(Flowable.empty())

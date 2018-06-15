@@ -6,7 +6,7 @@ import com.mania.movie.main.home.repository.model.MoviePickerModel
 import com.mania.movie.main.review.repository.ReviewModel
 import com.mania.movie.room.AppDatabase.Companion.DB_VERSION
 
-@Database(entities = [(MoviePickerModel::class),(ReviewModel::class)], version = DB_VERSION)
+@Database(entities = [(MoviePickerModel::class),(ReviewModel::class)], version = DB_VERSION, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

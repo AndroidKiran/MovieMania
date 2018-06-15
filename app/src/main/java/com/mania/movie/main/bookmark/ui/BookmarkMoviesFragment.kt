@@ -70,6 +70,7 @@ class BookmarkMoviesFragment : BaseFragment<FragmentBookmarkMovieBinding, Bookma
         super.onViewCreated(view, savedInstanceState)
         initUI()
         subscribeToBookMarkLiveData()
+        bookmarkMovieViewModel.retryGetBookmarkMovies.postValue(true)
     }
 
     private fun initUI() {

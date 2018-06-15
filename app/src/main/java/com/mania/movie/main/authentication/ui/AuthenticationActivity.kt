@@ -68,6 +68,11 @@ class AuthenticationActivity : BaseActivity<ActivityAuthenticationBinding, Authe
                 account.photoUrl?.let {
                     authenticationViewModel.persistUrlPhoto(it.toString())
                 }
+
+                account.id?.let {
+                    authenticationViewModel.persistAccountId(it)
+                }
+
                 authenticationViewModel.persistLoginState(true)
 
                 setResult(Activity.RESULT_OK)

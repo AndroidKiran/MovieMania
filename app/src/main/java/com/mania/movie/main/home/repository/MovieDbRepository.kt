@@ -15,12 +15,11 @@ class MovieDbRepository @Inject constructor(private val moviePickerDao: IMoviePi
                 moviePickerDao.insert(moviePickerModel)
             }.getCompletableAsync(schedulerProvider)
 
-    fun getBookMarkMovies() =
-            moviePickerDao.getBookmarks()
+    fun getBookMarkMovies(userID: String) =
+            moviePickerDao.getBookmarks(userID)
                     .toFlowable()
                     .getFlowableAsync(schedulerProvider)
                     .onErrorResumeNext(Flowable.empty())
                     .toLiveData()
 
-    fun getScheduler() = schedulerProvider
 }

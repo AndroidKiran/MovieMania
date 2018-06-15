@@ -55,7 +55,9 @@ class MoviePickerViewModel @Inject constructor(application: MovieManiaApplicatio
 
     fun insertBookmarkMovie(moviePickerModel: MoviePickerModel) =
             getCompositeDisposable().add(
-                    dbRepository.insertMovie(moviePickerModel)
+                    dbRepository.insertMovie(moviePickerModel.apply {
+                        userId = Utils.getUserID(preferenceHelper)!!
+                    })
                             .subscribe({
                                 handleOnSuccess()
                             },{

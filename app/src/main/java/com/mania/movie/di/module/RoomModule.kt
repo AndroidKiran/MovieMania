@@ -19,18 +19,5 @@ class RoomModule constructor(private val application: MovieManiaApplication) {
     @PerApplication
     fun provideAppDb(): AppDatabase =
             Room.databaseBuilder(application, AppDatabase::class.java, AppDatabase.DB_NAME)
-                    .addMigrations(FROM_1_TO_2)
                     .build()
-
-
-
-    companion object {
-        val FROM_1_TO_2 = object : Migration(1, 2){
-            override fun migrate(database: SupportSQLiteDatabase) {
-
-            }
-        }
-    }
-
-
 }

@@ -12,15 +12,17 @@ import io.reactivex.Single
 @Dao
 interface IReviewDao {
 
-    companion object {
-        const val TABLE_NAME = "review"
-    }
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(reviewModel: ReviewModel)
 
 
-    @Query("SELECT * FROM $TABLE_NAME")
-    fun getReviews(): Single<List<ReviewModel>>
+    @Query("SELECT * FROM $TABLE_NAME WHERE $USER_ID = :userID ORDER BY $CREATED_AT DESC")
+    fun getReviews(userID: String): Single<List<ReviewModel>>
+
+    companion object {
+        const val TABLE_NAME = "review"
+        const val USER_ID = "userId"
+        const val CREATED_AT = "createdAt"
+    }
 
 }
