@@ -268,7 +268,7 @@
                             app:cardBackgroundColor="?attr/colorPrimaryDark"
                             app:cardCornerRadius="24dp"
                             app:elevation="8dp"
-                            android:visibility="@{movieDetailsViewModel.loadingBinding ? View.GONE : View.VISIBLE}"
+                            android:visibility="@{movieDetailsViewModel.loadingBinding ? View.VISIBLE : View.GONE}"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

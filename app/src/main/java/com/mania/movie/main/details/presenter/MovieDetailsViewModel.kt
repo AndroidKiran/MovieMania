@@ -1,11 +1,15 @@
 package com.mania.movie.main.details.presenter
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableBoolean
 import com.mania.movie.MovieManiaApplication
+import com.mania.movie.helper.Result
 import com.mania.movie.main.base.BaseViewModel
+import com.mania.movie.main.details.repository.model.MovieDetailModel
 import com.mania.movie.main.home.repository.MovieApiRepository
 import com.mania.movie.mvvm.switchMap
+import com.mania.movie.rx.apibaseResponseToResult
 import com.mania.movie.rx.getFlowableAsync
 import com.mania.movie.rx.toLiveData
 import io.reactivex.Flowable
@@ -17,18 +21,16 @@ class MovieDetailsViewModel @Inject constructor(application: MovieManiaApplicati
 
     var loadingBinding = ObservableBoolean()
 
-    var movieDetailLiveData = queryLiveData.switchMap {
+    var movieDetailLiveData: LiveData<Result<MovieDetailModel>> = queryLiveData.switchMap {
         when (it) {
             null -> MutableLiveData()
-            else -> loadMovies(it)
+            else ->  apiRepository.getMovieDetailById(it)
+                    .doOnSubscribe { loadingBinding.set(true) }
+                    .toFlowable()
+                    .getFlowableAsync(apiRepository.getSchedulerProvider())
+                    .apibaseResponseToResult()
+                    .toLiveData()
         }
     }
 
-    private fun loadMovies(name: String) =
-            apiRepository.getMovieDetailById(name)
-                    .toFlowable()
-                    .onErrorResumeNext(Flowable.empty())
-                    .doOnSubscribe { loadingBinding.set(true) }
-                    .getFlowableAsync(apiRepository.getSchedulerProvider())
-                    .toLiveData()
 }

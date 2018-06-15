@@ -155,16 +155,16 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
     private fun subscribeToMovieListLiveData() {
         moviePickerViewModel.movieListLiveData.observe(this) {
             it?.let {
-                val movieList = it.searchList
-                if (movieList != null) {
-                    if (movieList.isNotEmpty()) {
+                if(it.isSuccess()) {
+                    val movieList = it.value.searchList
+                    if (movieList != null && movieList.isNotEmpty()) {
                         moviePickerAdapter.setData(movieList)
                         activityMoviePickerBinding.multiStateViewLayout?.multiStateView?.setViewState(BindedMultiStateView.VIEW_STATE_CONTENT)
                     } else {
                         activityMoviePickerBinding.multiStateViewLayout?.multiStateView?.setViewState(BindedMultiStateView.VIEW_STATE_EMPTY)
                     }
                 } else {
-                    activityMoviePickerBinding.multiStateViewLayout?.multiStateView?.setViewState(BindedMultiStateView.VIEW_STATE_EMPTY)
+                    activityMoviePickerBinding.multiStateViewLayout?.multiStateView?.setViewState(BindedMultiStateView.VIEW_STATE_ERROR)
                 }
             }
         }

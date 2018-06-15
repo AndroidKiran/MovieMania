@@ -6,13 +6,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.FrameLayout
 import com.mania.movie.BR
 import com.mania.movie.R
+import com.mania.movie.binding.SnackbarConfiguration
 import com.mania.movie.binding.ToolbarConfiguration
 import com.mania.movie.databinding.FragmentMovieDetailsBinding
+import com.mania.movie.extension.showActionSnackBar
 import com.mania.movie.main.base.BaseFragment
 import com.mania.movie.main.details.presenter.MovieDetailsViewModel
 import com.mania.movie.mvvm.observe
@@ -44,6 +47,7 @@ class MovieDetailFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetail
         getViewDataBinding().also {
             it.setVariable(BR.movieDetailsViewModel, movieDetailsViewModel)
             it.setVariable(BR.toolbarConfig,toolbarConfiguration)
+            it.setVariable(BR.snackBarConfig, snackBarConfiguration)
             it.setLifecycleOwner(this)
             fragmentMovieDetailsBinding = it
         }
@@ -84,10 +88,19 @@ class MovieDetailFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetail
     private fun subscribeToMovieDetailsLiveData() {
         movieDetailsViewModel.movieDetailLiveData.observe(this) {
             it?.let {
-                fragmentMovieDetailsBinding.movieDetailsModel = it
+                if(it.isSuccess()) {
+                    fragmentMovieDetailsBinding.movieDetailsModel = it.value
+                } else {
+                    snackBarConfiguration.showActionSnackBar(getString(R.string.str_something_wrong_msg),
+                            getString(R.string.str_retry),
+                            View.OnClickListener {
+                                movieDetailsViewModel.queryLiveData.postValue(movieId)
+                            },
+                            Snackbar.LENGTH_INDEFINITE)
+                }
             }
+            movieDetailsViewModel.loadingBinding.set(false)
         }
-        movieDetailsViewModel.loadingBinding.set(false)
     }
 
     private val toolbarClickListener = View.OnClickListener {

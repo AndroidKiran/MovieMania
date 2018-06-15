@@ -2,12 +2,11 @@ package com.mania.movie.main.home.presenter
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.content.SharedPreferences
-import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import com.mania.movie.MovieManiaApplication
 import com.mania.movie.di.scope.PerActivity
 import com.mania.movie.helper.PreferenceHelper
+import com.mania.movie.helper.Result
 import com.mania.movie.helper.Utils
 import com.mania.movie.main.base.BaseViewModel
 import com.mania.movie.main.home.repository.MovieApiRepository
@@ -15,11 +14,7 @@ import com.mania.movie.main.home.repository.MovieDbRepository
 import com.mania.movie.main.home.repository.model.MoviePickerListModel
 import com.mania.movie.main.home.repository.model.MoviePickerModel
 import com.mania.movie.mvvm.switchMap
-import com.mania.movie.rx.getObservableAsync
 import com.mania.movie.rx.toLiveData
-import io.reactivex.Observable
-import io.reactivex.functions.Function
-import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -31,7 +26,7 @@ class MoviePickerViewModel @Inject constructor(application: MovieManiaApplicatio
 
     var queryLiveData = MutableLiveData<String>()
 
-    var movieListLiveData: LiveData<MoviePickerListModel> = queryLiveData.switchMap {
+    var movieListLiveData: LiveData<Result<MoviePickerListModel>> = queryLiveData.switchMap {
         when (it) {
             null -> MutableLiveData()
             else -> apiRepository.getMoviesForQuery(it)
