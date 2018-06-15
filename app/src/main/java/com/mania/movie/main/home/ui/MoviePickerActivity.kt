@@ -185,7 +185,9 @@ class MoviePickerActivity : BaseActivity<ActivityMoviePickerBinding, MoviePicker
 
         override fun onMovieLike(moviePickerModel: MoviePickerModel) {
             hideKeyboard()
-
+            snackBarConfiguration.showSnackBar(getString(R.string.str_under_progress),
+                    SnackbarConfiguration.Type.NEUTRAL,
+                    Snackbar.LENGTH_SHORT)
         }
 
         override fun onMovieBookmark(moviePickerModel: MoviePickerModel) {

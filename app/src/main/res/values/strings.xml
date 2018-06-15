@@ -29,5 +29,6 @@
     <string name="str_reviews">Reviews</string>
     <string name="str_no_reviews">No reviews available</string>
     <string name="str_bookmark_success_msg">Bookmarked Successfully</string>
-
+    <string name="str_under_progress">Under progress\u2026</string>
+    <string name="str_search">Search movies, series etc</string>
 </resources>
