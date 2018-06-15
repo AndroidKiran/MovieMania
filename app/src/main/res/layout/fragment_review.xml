@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="reviewViewModel"
+            type="com.mania.movie.main.review.presenter.ReviewViewModel" />
+
+        <variable
+            name="toolbarConfig"
+            type="com.mania.movie.binding.ToolbarConfiguration" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Light">
+
+            <include
+                android:id="@+id/review_toolbar"
+                layout="@layout/include_toolbar"
+                app:toolbarConfig="@{toolbarConfig}" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_anchor="@id/appbar"
+                app:layout_anchorGravity="bottom">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/btn_redo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="4dp"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/vc_skip_next" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_clear"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/btn_undo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="4dp"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/vc_skip_previous" />
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <LinearLayout
+            android:id="@+id/canvas_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/str_save"
+            android:visibility="gone"
+            app:layout_anchor="@id/canvas_layout"
+            app:layout_anchorGravity="bottom|center_horizontal" />
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

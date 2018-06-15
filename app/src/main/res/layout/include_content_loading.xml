@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="contentLoadingViewConfig"
+            type="com.mania.movie.binding.ContentLoadingConfiguration" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/circular_progress"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="32dp"
+            android:shape="ring"
+            app:cardBackgroundColor="?attr/colorPrimaryDark"
+            app:cardCornerRadius="24dp"
+            app:elevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/contentLoadingMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@{contentLoadingViewConfig.contentLoadingText}"
+            tools:text="Loading\u2026" />
+
+
+    </LinearLayout>
+
+
+</layout>
+
+
+
+
+

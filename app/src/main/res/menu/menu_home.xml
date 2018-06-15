@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/action_review"
+        android:icon="@drawable/vc_border_color"
+        android:orderInCategory="300"
+        android:title="@string/str_review"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_book_mark"
+        android:icon="@drawable/vc_bookmark_solid"
+        android:orderInCategory="300"
+        android:title="@string/str_book_mark"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_log_in"
+        android:orderInCategory="300"
+        android:title="@string/str_login"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_log_out"
+        android:orderInCategory="300"
+        android:title="@string/str_logout"
+        app:showAsAction="ifRoom" />
+
+</menu>

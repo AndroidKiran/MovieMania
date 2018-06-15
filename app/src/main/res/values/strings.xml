@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">MovieMania</string>
+
+    <string name="str_no_internet_title">No active internet connection</string>
+    <string name="str_dismiss">Dismiss</string>
+    <string name="str_something_wrong_msg">Something went wrong\u2026 Please try again</string>
+    <string name="str_internet_title">Hurray, internet connection is back</string>
+    <string name="str_retry">Retry</string>
+    <string name="str_no_movies_available">No movies available</string>
+    <string name="str_loading">Loading\u2026</string>
+
+    <string name="str_year">Year</string>
+    <string name="str_genre">Genre</string>
+    <string name="str_country">Country</string>
+    <string name="str_language">Language</string>
+    <string name="str_director">Director</string>
+    <string name="str_plot">Plot</string>
+    <string name="str_imdb_rating">Ratings</string>
+    <string name="str_votes">Votes</string>
+    <string name="str_book_mark">Bookmark</string>
+    <string name="str_skip">Skip</string>
+    <string name="str_login">Login</string>
+    <string name="str_logout">Logout</string>
+    <string name="str_review">Review</string>
+    <string name="str_clear">Clear</string>
+    <string name="str_save">Save</string>
+    <string name="perm_ext">We use external storage to save review images</string>
+    <string name="str_cannot_save">Cannot save review.\nPlease check if storage is mounted.</string>
+    <string name="str_reviews">Reviews</string>
+    <string name="str_no_reviews">No reviews available</string>
+    <string name="str_bookmark_success_msg">Bookmarked Successfully</string>
+
+</resources>

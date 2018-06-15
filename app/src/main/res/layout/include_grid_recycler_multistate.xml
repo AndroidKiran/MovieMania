@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="gridRecyclerViewConfig"
+            type="com.mania.movie.binding.GridRecyclerViewConfiguration" />
+
+        <variable
+            name="contentLoadingBindingConfig"
+            type="com.mania.movie.binding.ContentLoadingConfiguration" />
+
+        <variable
+            name="emptyViewBindingConfig"
+            type="com.mania.movie.binding.EmptyViewConfiguration" />
+
+        <variable
+            name="errorViewBindingConfig"
+            type="com.mania.movie.binding.ErrorViewConfiguration" />
+    </data>
+
+
+    <com.mania.movie.ui.BindedMultiStateView
+        android:id="@+id/multiStateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:contentLoadingBindingConfig="@{contentLoadingBindingConfig}"
+        app:emptyViewBindingConfig="@{emptyViewBindingConfig}"
+        app:errorViewBindingConfig="@{errorViewBindingConfig}"
+        app:msv_emptyView="@layout/include_empty_view"
+        app:msv_errorView="@layout/include_error_view"
+        app:msv_loadingView="@layout/include_content_loading"
+        app:msv_viewState="loading">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:gridRecyclerBinding="@{gridRecyclerViewConfig}"
+            tools:listitem="@layout/item_movie_picker" />
+
+    </com.mania.movie.ui.BindedMultiStateView>
+
+
+</layout>

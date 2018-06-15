@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="moviePickerViewModel"
+            type="com.mania.movie.main.home.presenter.MoviePickerViewModel" />
+
+        <variable
+            name="emptyViewConfig"
+            type="com.mania.movie.binding.EmptyViewConfiguration" />
+
+        <variable
+            name="errorViewConfig"
+            type="com.mania.movie.binding.ErrorViewConfiguration" />
+
+        <variable
+            name="contentLoadingViewConfig"
+            type="com.mania.movie.binding.ContentLoadingConfiguration" />
+
+        <variable
+            name="snackBarConfig"
+            type="com.mania.movie.binding.SnackbarConfiguration" />
+
+        <variable
+            name="gridRecyclerViewConfig"
+            type="com.mania.movie.binding.GridRecyclerViewConfiguration" />
+
+        <variable
+            name="toolbarConfig"
+            type="com.mania.movie.binding.ToolbarConfiguration" />
+
+        <variable
+            name="editTextListener"
+            type="com.mania.movie.main.home.ui.IEditTextChangeListener" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:snackBarBinding="@{snackBarConfig}">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:titleEnabled="false">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/iv_profile_pic"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_margin="8dp"
+                            android:padding="2dp"
+                            android:scaleType="centerCrop"
+                            app:imageUrlWithCircularTrans="@{moviePickerViewModel.userPic}"
+                            app:layout_constraintBottom_toTopOf="@id/search_container"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/vc_person" />
+
+                        <include
+                            android:id="@+id/home_toolbar"
+                            layout="@layout/include_toolbar"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
+                            app:layout_constraintBottom_toTopOf="@id/search_container"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:toolbarConfig="@{toolbarConfig}" />
+
+                        <include
+                            android:id="@+id/search_container"
+                            layout="@layout/include_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:layout_below="@id/home_toolbar"
+                            app:editTextListener="@{editTextListener}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <include
+                android:id="@+id/multiStateViewLayout"
+                layout="@layout/include_grid_recycler_multistate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:contentLoadingBindingConfig="@{contentLoadingViewConfig}"
+                app:emptyViewBindingConfig="@{emptyViewConfig}"
+                app:errorViewBindingConfig="@{errorViewConfig}"
+                app:gridRecyclerViewConfig="@{gridRecyclerViewConfig}"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/window_back_ground"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+
+</layout>
