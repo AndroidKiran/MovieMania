@@ -1,5 +1,5 @@
 # MovieMania
-Demo app build using below component
+MovieMania app built to demonstrate new Google Architecture component
 
 Google Architecture component such as
 
